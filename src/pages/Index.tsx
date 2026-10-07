@@ -18,7 +18,6 @@ const Index = () => {
 
   const handleIntroComplete = useCallback(() => {
     setShowIntro(false);
-    // Small delay before revealing content for smooth transition
     requestAnimationFrame(() => {
       setContentReady(true);
     });
@@ -27,16 +26,14 @@ const Index = () => {
   return (
     <>
       {showIntro && <WelcomeIntro onComplete={handleIntroComplete} />}
+      <Header />
       <div
-        className={`min-h-screen bg-background transition-all duration-700 ease-out ${
-          contentReady
-            ? 'opacity-100 translate-y-0'
-            : 'opacity-0 translate-y-4'
+        className={`min-h-screen bg-background transition-opacity duration-700 ease-out ${
+          contentReady ? 'opacity-100' : 'opacity-0'
         }`}
         style={{ visibility: showIntro ? 'hidden' : 'visible' }}
       >
-        <Header />
-        <main className="pb-20 lg:pb-0">
+        <main className="pb-24 lg:pb-0">
           <HeroSection />
           <PersonalInfo />
           <Gallery />
@@ -46,9 +43,9 @@ const Index = () => {
           <Contact />
         </main>
         <Footer />
-        <WhatsAppButton />
-        <BottomNav />
       </div>
+      <WhatsAppButton />
+      <BottomNav />
     </>
   );
 };

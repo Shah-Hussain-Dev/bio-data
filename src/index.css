@@ -682,3 +682,28 @@ body {
 .island-btn:active {
   transform: scale(0.98);
 }
+
+/* ========================================================================= */
+/* Netlify Watermark / Badge Suppressor & Safe Area Fixes                   */
+/* ========================================================================= */
+[data-netlify-badge],
+.netlify-badge,
+#netlify-badge,
+iframe[src*="netlify"],
+iframe[title*="Netlify"],
+a[href*="netlify.com"][style*="fixed"],
+div[style*="position: fixed"][style*="bottom"][style*="right"] a[href*="netlify"],
+div:has(> a[href*="netlify.com"]),
+div[class*="netlify-badge"] {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  z-index: -99999 !important;
+}
+
+@supports (padding: max(0px)) {
+  .safe-area-bottom {
+    padding-bottom: max(env(safe-area-inset-bottom, 0px), 8px);
+  }
+}

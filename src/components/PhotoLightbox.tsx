@@ -100,7 +100,7 @@ export const PhotoLightbox = ({
 
   return createPortal(
     <div
-      className="fixed inset-0 z-[9999] flex flex-col justify-between bg-black/90 backdrop-blur-2xl animate-fade-in select-none"
+      className="fixed inset-0 z-[999999] flex flex-col justify-between bg-black/90 backdrop-blur-2xl animate-fade-in select-none"
       onClick={onClose}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}

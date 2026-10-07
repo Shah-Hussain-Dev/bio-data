@@ -160,7 +160,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section id="hero" className="relative min-h-[100dvh] bg-textured overflow-hidden flex flex-col justify-between pt-24 pb-16 lg:pt-28 lg:pb-20">
+    <section id="hero" className="relative min-h-[100dvh] bg-textured overflow-hidden flex flex-col justify-between pt-16 sm:pt-20 lg:pt-28 pb-10 sm:pb-14 lg:pb-20">
       {/* 1. Ambient Lighting & Canvas Particle Atmosphere with Parallax */}
       <canvas
         ref={canvasRef}
@@ -190,21 +190,21 @@ const HeroSection = () => {
         </svg>
       </Parallax>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 my-auto">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 my-1 sm:my-3 lg:my-auto">
 
         {/* 2. Top Majestic Calligraphy Header with Parallax Drift */}
-        <Parallax speed={0.12} className="text-center pt-2 sm:pt-4 pb-8 sm:pb-12 animate-fade-in">
+        <Parallax speed={0.12} className="text-center pt-1 sm:pt-2 pb-3 sm:pb-6 lg:pb-10 animate-fade-in">
           {/* Eyebrow Filigree Line */}
-          <div className="inline-flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
+          <div className="inline-flex items-center gap-3 sm:gap-4 mb-1.5 sm:mb-3">
             <div className="w-10 sm:w-20 h-px bg-gradient-to-r from-transparent via-secondary/70 to-secondary" />
-            <span className="text-secondary/80 text-xs sm:text-sm tracking-[0.25em] uppercase font-sans font-medium">
+            <span className="text-secondary/80 text-[11px] sm:text-xs md:text-sm tracking-[0.25em] uppercase font-sans font-medium">
               ✦ بِسْمِ اللَّهِ ✦
             </span>
             <div className="w-10 sm:w-20 h-px bg-gradient-to-l from-transparent via-secondary/70 to-secondary" />
           </div>
 
           {/* Animated Bismillah Arabic Script */}
-          <div className="relative min-h-[3rem] sm:min-h-[4.5rem] flex items-center justify-center overflow-hidden" dir="rtl">
+          <div className="relative min-h-[2.5rem] sm:min-h-[3.5rem] md:min-h-[4.5rem] flex items-center justify-center overflow-hidden" dir="rtl">
             <p
               className="font-arabic text-2xl sm:text-4xl md:text-5xl lg:text-6xl text-gold-luxury font-bold tracking-wider leading-relaxed whitespace-nowrap drop-shadow-[0_4px_20px_rgba(212,175,55,0.35)]"
               style={{
@@ -216,7 +216,7 @@ const HeroSection = () => {
             </p>
             {/* Glowing Golden Cursor */}
             <span
-              className="absolute h-9 sm:h-14 w-0.5 sm:w-1 bg-gradient-to-b from-amber-300 via-secondary to-amber-500 rounded-full shadow-[0_0_15px_3px_hsl(43,90%,55%)] animate-pulse"
+              className="absolute h-8 sm:h-12 md:h-14 w-0.5 sm:w-1 bg-gradient-to-b from-amber-300 via-secondary to-amber-500 rounded-full shadow-[0_0_15px_3px_hsl(43,90%,55%)] animate-pulse"
               style={{
                 left: `${50 - revealProgress / 2}%`,
                 opacity: revealProgress > 0 && revealProgress < 100 ? 1 : 0,
@@ -226,12 +226,12 @@ const HeroSection = () => {
           </div>
 
           {/* Translation & Quranic Ayat */}
-          <div className={`transition-all duration-700 mt-2 flex flex-col items-center justify-center gap-1 ${showTranslation ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'
+          <div className={`transition-all duration-700 mt-1 sm:mt-2 flex flex-col items-center justify-center gap-0.5 sm:gap-1 ${showTranslation ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
             }`}>
-            <p className="text-foreground/80 text-xs sm:text-sm tracking-[0.18em] uppercase font-medium font-sans">
+            <p className="text-foreground/80 text-[11px] sm:text-xs md:text-sm tracking-[0.16em] uppercase font-medium font-sans">
               In the name of Allah, the Most Gracious, the Most Merciful
             </p>
-            <p className="text-secondary/80 text-[11px] sm:text-xs tracking-wider italic font-sans">
+            <p className="text-secondary/80 text-[10px] sm:text-[11px] md:text-xs tracking-wider italic font-sans">
               “And We created you in pairs” — Surah An-Naba (78:8)
             </p>
           </div>
