@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { useLenis } from 'lenis/react';
 import {
   User,
@@ -90,7 +91,7 @@ const Header = () => {
   return (
     <>
       {/* ========================================================================= */}
-      {/* 1. TOP HEADER (Visible on Mobile, Tablet & Desktop)                       */}
+      {/* 1. TOP HEADER (Fixed Navigation Bar)                                      */}
       {/* ========================================================================= */}
       <header
         className={`fixed top-0 left-0 right-0 z-[99990] transition-all duration-300 ${
@@ -118,15 +119,17 @@ const Header = () => {
             >
               <div className="relative">
                 <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-secondary via-amber-400 to-amber-500 flex items-center justify-center shadow-md shadow-secondary/30 group-hover:shadow-secondary/50 transition-all duration-300 group-hover:scale-105">
-                  <span className="font-serif text-base sm:text-lg font-bold text-primary">SH</span>
+                  <span className="font-sans text-sm sm:text-base font-black text-primary tracking-tight">
+                    SH
+                  </span>
                 </div>
                 <Sparkles className="absolute -top-1 -right-1 w-3.5 h-3.5 text-secondary animate-pulse" />
               </div>
               <div className="flex flex-col">
-                <span className="font-serif text-base sm:text-lg font-bold text-gold-luxury leading-tight">
+                <span className="font-sans text-base sm:text-lg font-bold text-gold-luxury leading-tight tracking-tight">
                   Shah Hussain
                 </span>
-                <span className="text-[9px] sm:text-[10px] text-secondary/70 tracking-widest uppercase font-medium">
+                <span className="text-[9px] sm:text-[10px] text-secondary/70 tracking-widest uppercase font-medium font-sans">
                   Marriage Biodata
                 </span>
               </div>
@@ -142,7 +145,7 @@ const Header = () => {
                   <button
                     key={item.href}
                     onClick={() => scrollToSection(item.href)}
-                    className={`relative flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium transition-all duration-300 group cursor-pointer ${
+                    className={`relative flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium transition-all duration-300 group cursor-pointer font-sans ${
                       isActive
                         ? 'text-secondary bg-secondary/10 shadow-inner'
                         : 'text-foreground/75 hover:text-secondary hover:bg-secondary/5'
@@ -170,7 +173,7 @@ const Header = () => {
                 href="/bio-data.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-secondary/30 bg-secondary/10 hover:bg-secondary/20 text-secondary text-xs font-semibold transition-all duration-300 hover:scale-105"
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-secondary/30 bg-secondary/10 hover:bg-secondary/20 text-secondary text-xs font-semibold transition-all duration-300 hover:scale-105 font-sans"
                 title="Download Biodata PDF"
               >
                 <Download className="w-3.5 h-3.5" />
@@ -178,7 +181,7 @@ const Header = () => {
               </a>
               <button
                 onClick={() => scrollToSection('#contact')}
-                className="relative overflow-hidden px-4 py-2 rounded-xl bg-gradient-to-r from-amber-400 via-secondary to-amber-500 text-primary font-bold text-xs sm:text-sm shadow-md shadow-secondary/30 hover:shadow-secondary/50 transition-all duration-300 hover:scale-105 group cursor-pointer"
+                className="relative overflow-hidden px-4 py-2 rounded-xl bg-gradient-to-r from-amber-400 via-secondary to-amber-500 text-primary font-bold text-xs sm:text-sm shadow-md shadow-secondary/30 hover:shadow-secondary/50 transition-all duration-300 hover:scale-105 group cursor-pointer font-sans"
               >
                 <span className="relative z-10">Get In Touch</span>
                 <span className="absolute inset-0 bg-gradient-to-r from-amber-300 via-secondary to-amber-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -188,16 +191,11 @@ const Header = () => {
             {/* Mobile & Tablet Right Controls: Hamburger Toggle */}
             <div className="flex lg:hidden items-center gap-2">
               <button
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="w-10 h-10 rounded-xl bg-card/80 border border-secondary/30 flex items-center justify-center text-secondary hover:text-amber-300 hover:bg-secondary/15 transition-all duration-300 active:scale-95 shadow-md focus:outline-none"
-                aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
-                aria-expanded={mobileMenuOpen}
+                onClick={() => setMobileMenuOpen(true)}
+                className="w-10 h-10 rounded-xl bg-card/90 border border-secondary/35 flex items-center justify-center text-secondary hover:text-amber-300 hover:bg-secondary/15 transition-all duration-200 active:scale-95 shadow-md focus:outline-none cursor-pointer"
+                aria-label="Open navigation menu"
               >
-                {mobileMenuOpen ? (
-                  <X className="w-5 h-5 transition-transform duration-200 rotate-90 animate-fade-in" />
-                ) : (
-                  <Menu className="w-5 h-5 transition-transform duration-200" />
-                )}
+                <Menu className="w-5 h-5 transition-transform duration-200" />
               </button>
             </div>
           </div>
@@ -205,110 +203,114 @@ const Header = () => {
       </header>
 
       {/* ========================================================================= */}
-      {/* 2. MOBILE & TABLET SLIDE-OUT / FULL-SCREEN MENU DRAWER                    */}
+      {/* 2. PORTALED FULL-SCREEN MOBILE & TABLET DRAWER (z-[9999999])              */}
       {/* ========================================================================= */}
-      {mobileMenuOpen && (
-        <div className="fixed inset-0 z-[99995] lg:hidden animate-fade-in">
-          {/* Dark Frosted Glass Backdrop */}
-          <div
-            className="absolute inset-0 bg-black/70 backdrop-blur-xl transition-opacity"
-            onClick={() => setMobileMenuOpen(false)}
-          />
+      {mobileMenuOpen &&
+        createPortal(
+          <div className="fixed inset-0 z-[9999999] lg:hidden flex flex-col justify-end">
+            {/* Dark Frosted Glass Backdrop */}
+            <div
+              className="absolute inset-0 bg-black/80 backdrop-blur-2xl transition-opacity animate-fade-in"
+              onClick={() => setMobileMenuOpen(false)}
+            />
 
-          {/* Drawer Sheet */}
-          <div className="relative w-full h-full max-w-sm ml-auto bg-card/95 border-l border-secondary/25 shadow-2xl flex flex-col justify-between p-6 overflow-y-auto animate-scale-in">
-            {/* Top Bar inside Drawer */}
-            <div>
-              <div className="flex items-center justify-between pb-5 border-b border-secondary/20">
-                <div className="flex items-center gap-3">
-                  <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-secondary via-amber-400 to-amber-500 flex items-center justify-center shadow-lg shadow-secondary/30">
-                    <span className="font-serif text-lg font-bold text-primary">SH</span>
-                  </div>
-                  <div>
-                    <h3 className="font-serif text-lg font-bold text-gold-luxury leading-tight">
-                      Shah Hussain
-                    </h3>
-                    <p className="text-[11px] text-secondary/70 font-sans">
-                      Software Engineer • Lucknow
-                    </p>
-                  </div>
-                </div>
-                <button
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="w-9 h-9 rounded-full bg-secondary/10 hover:bg-secondary/20 border border-secondary/30 flex items-center justify-center text-secondary transition-all active:scale-95"
-                  aria-label="Close menu"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
-
-              {/* Navigation Items */}
-              <div className="mt-6 flex flex-col gap-1.5">
-                <span className="text-[10px] tracking-widest text-secondary/60 uppercase font-semibold px-3 mb-1">
-                  Navigation
-                </span>
-                {navItems.map((item) => {
-                  const isActive = activeSection === item.href;
-                  const Icon = item.icon;
-
-                  return (
-                    <button
-                      key={item.href}
-                      onClick={() => scrollToSection(item.href)}
-                      className={`flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 group text-left cursor-pointer ${
-                        isActive
-                          ? 'bg-secondary/20 text-secondary font-semibold border border-secondary/40'
-                          : 'text-foreground/80 hover:bg-secondary/10 hover:text-secondary'
-                      }`}
-                    >
-                      <div className="flex items-center gap-3">
-                        <div
-                          className={`p-2 rounded-lg ${
-                            isActive ? 'bg-secondary/30 text-amber-300' : 'bg-secondary/10 text-secondary'
-                          }`}
-                        >
-                          <Icon className="w-4 h-4" />
-                        </div>
-                        <span className="font-sans text-sm">{item.label}</span>
+            {/* Slide-out Menu Panel (Full Screen / Height) */}
+            <div className="relative w-full h-full max-w-sm ml-auto bg-card/98 border-l border-secondary/30 shadow-[0_0_60px_rgba(0,0,0,0.9)] flex flex-col justify-between p-5 sm:p-6 overflow-y-auto animate-scale-in z-10">
+              {/* Header inside Drawer */}
+              <div>
+                <div className="flex items-center justify-between pb-4 border-b border-secondary/20">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-secondary via-amber-400 to-amber-500 flex items-center justify-center shadow-lg shadow-secondary/30">
+                      <span className="font-sans text-sm font-black text-primary">SH</span>
+                    </div>
+                    <div>
+                      <div className="font-sans text-base font-bold text-gold-luxury leading-tight">
+                        Shah Hussain
                       </div>
-                      <ArrowUpRight
-                        className={`w-4 h-4 transition-transform duration-200 ${
+                      <p className="text-[11px] text-secondary/75 font-sans font-medium">
+                        Software Engineer • Lucknow
+                      </p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="w-9 h-9 rounded-full bg-secondary/15 hover:bg-secondary/25 border border-secondary/30 flex items-center justify-center text-secondary transition-all active:scale-95 cursor-pointer"
+                    aria-label="Close menu"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+
+                {/* Navigation Items */}
+                <div className="mt-5 flex flex-col gap-1.5">
+                  <span className="text-[10px] tracking-widest text-secondary/60 uppercase font-semibold px-3 mb-1 font-sans">
+                    Menu Navigation
+                  </span>
+                  {navItems.map((item) => {
+                    const isActive = activeSection === item.href;
+                    const Icon = item.icon;
+
+                    return (
+                      <button
+                        key={item.href}
+                        onClick={() => scrollToSection(item.href)}
+                        className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 group text-left cursor-pointer font-sans ${
                           isActive
-                            ? 'text-secondary translate-x-0.5 -translate-y-0.5'
-                            : 'text-foreground/30 group-hover:text-secondary group-hover:translate-x-0.5 group-hover:-translate-y-0.5'
+                            ? 'bg-secondary/20 text-secondary font-semibold border border-secondary/40 shadow-inner'
+                            : 'text-foreground/85 hover:bg-secondary/10 hover:text-secondary'
                         }`}
-                      />
-                    </button>
-                  );
-                })}
+                      >
+                        <div className="flex items-center gap-3">
+                          <div
+                            className={`p-2 rounded-lg transition-colors ${
+                              isActive
+                                ? 'bg-secondary/30 text-amber-300'
+                                : 'bg-secondary/10 text-secondary group-hover:bg-secondary/20'
+                            }`}
+                          >
+                            <Icon className="w-4 h-4" />
+                          </div>
+                          <span className="font-sans text-sm font-medium">{item.label}</span>
+                        </div>
+                        <ArrowUpRight
+                          className={`w-4 h-4 transition-transform duration-200 ${
+                            isActive
+                              ? 'text-secondary translate-x-0.5 -translate-y-0.5'
+                              : 'text-foreground/30 group-hover:text-secondary group-hover:translate-x-0.5 group-hover:-translate-y-0.5'
+                          }`}
+                        />
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Bottom Actions inside Drawer */}
+              <div className="mt-6 pt-4 border-t border-secondary/20 flex flex-col gap-2.5">
+                <a
+                  href="/bio-data.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full inline-flex items-center justify-center gap-2.5 px-4 py-3 rounded-xl bg-secondary/15 hover:bg-secondary/25 border border-secondary/30 text-foreground font-semibold text-xs tracking-wide transition-all shadow-sm font-sans"
+                >
+                  <Download className="w-4 h-4 text-secondary" />
+                  <span>Download Official Biodata PDF</span>
+                </a>
+
+                <a
+                  href="https://wa.me/917071967998?text=Assalamu%20Alaikum!%20I%20viewed%20your%20marriage%20biodata%20and%20would%20like%20to%20connect."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full inline-flex items-center justify-center gap-2.5 px-4 py-3 rounded-xl bg-gradient-to-r from-emerald-600 via-emerald-500 to-emerald-600 text-white font-bold text-xs tracking-wide shadow-lg shadow-emerald-950/50 hover:scale-[1.02] transition-transform font-sans"
+                >
+                  <MessageCircle className="w-4 h-4" />
+                  <span>Chat on WhatsApp</span>
+                </a>
               </div>
             </div>
-
-            {/* Bottom Actions inside Drawer */}
-            <div className="mt-8 pt-5 border-t border-secondary/20 flex flex-col gap-3">
-              <a
-                href="/bio-data.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full inline-flex items-center justify-center gap-2.5 px-4 py-3 rounded-xl bg-secondary/15 hover:bg-secondary/25 border border-secondary/30 text-foreground font-semibold text-xs tracking-wide transition-all shadow-sm"
-              >
-                <Download className="w-4 h-4 text-secondary" />
-                <span>Download Official Biodata PDF</span>
-              </a>
-
-              <a
-                href="https://wa.me/917071967998?text=Assalamu%20Alaikum!%20I%20viewed%20your%20marriage%20biodata%20and%20would%20like%20to%20connect."
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full inline-flex items-center justify-center gap-2.5 px-4 py-3 rounded-xl bg-gradient-to-r from-emerald-600 via-emerald-500 to-emerald-600 text-white font-bold text-xs tracking-wide shadow-md shadow-emerald-900/40 hover:scale-[1.02] transition-transform"
-              >
-                <MessageCircle className="w-4 h-4" />
-                <span>Chat on WhatsApp</span>
-              </a>
-            </div>
-          </div>
-        </div>
-      )}
+          </div>,
+          document.body
+        )}
     </>
   );
 };
