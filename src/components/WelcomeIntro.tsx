@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 
 /**
  * WelcomeIntro — A cinematic, Awwwards-worthy page-load overlay.
@@ -24,6 +25,14 @@ const WelcomeIntro = ({ onComplete }: WelcomeIntroProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const hasEnteredRef = useRef(false);
+
+  // Lock body scroll during welcome intro
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, []);
 
   // Generate floating particles
   useEffect(() => {
@@ -183,10 +192,10 @@ const WelcomeIntro = ({ onComplete }: WelcomeIntroProps) => {
 
   const nameChars = 'Shah Hussain'.split('');
 
-  return (
+  return createPortal(
     <div
       ref={containerRef}
-      className={`fixed inset-0 z-[9999] flex flex-col items-center justify-center overflow-hidden transition-all ${
+      className={`fixed inset-0 z-[99999999] flex flex-col items-center justify-center overflow-hidden transition-all ${
         isExiting ? 'duration-[900ms]' : 'duration-500'
       }`}
       style={{
@@ -401,7 +410,7 @@ const WelcomeIntro = ({ onComplete }: WelcomeIntroProps) => {
           {/* Enter Button */}
           <button
             onClick={handleEnter}
-            className="group relative inline-flex items-center gap-3 px-8 py-3.5 rounded-full overflow-hidden transition-all duration-500 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:ring-offset-2 focus:ring-offset-background"
+            className="group relative inline-flex items-center gap-3 px-8 py-3.5 rounded-full overflow-hidden transition-all duration-500 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:ring-offset-2 focus:ring-offset-background cursor-pointer"
             aria-label="Enter site"
           >
             {/* Background shimmer */}
@@ -464,7 +473,8 @@ const WelcomeIntro = ({ onComplete }: WelcomeIntroProps) => {
           100% { transform: translateX(100%); }
         }
       `}</style>
-    </div>
+    </div>,
+    document.body
   );
 };
 

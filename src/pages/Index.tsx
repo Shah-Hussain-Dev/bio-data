@@ -26,7 +26,7 @@ const Index = () => {
   return (
     <>
       {showIntro && <WelcomeIntro onComplete={handleIntroComplete} />}
-      <Header />
+      {!showIntro && <Header />}
       <div
         className={`min-h-screen bg-background transition-opacity duration-700 ease-out ${
           contentReady ? 'opacity-100' : 'opacity-0'
@@ -44,8 +44,8 @@ const Index = () => {
         </main>
         <Footer />
       </div>
-      <WhatsAppButton />
-      <BottomNav />
+      {!showIntro && <WhatsAppButton />}
+      {!showIntro && <BottomNav />}
     </>
   );
 };
