@@ -15,7 +15,7 @@ export default {
     extend: {
       fontFamily: {
         sans: ['Poppins', 'sans-serif'],
-        serif: ['Ramallah', 'Playfair Display', 'serif'],
+        serif: ['Playfair Display', 'Cinzel', 'serif'],
         arabic: ['Reem Kufi', 'Aref Ruqaa', 'sans-serif'],
         'arabic-display': ['Aref Ruqaa', 'serif'],
         ramallah: ['Ramallah', 'serif'],

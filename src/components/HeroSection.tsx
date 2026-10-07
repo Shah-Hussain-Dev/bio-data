@@ -10,7 +10,7 @@ import {
   Heart,
   ArrowUpRight,
   Calendar,
-  CheckCircle2
+  CheckCircle2,
 } from 'lucide-react';
 import PhotoCarousel, { PhotoCarouselHandle } from './PhotoCarousel';
 import { Button } from './ui/button';
@@ -44,14 +44,14 @@ const HeroSection = () => {
     window.addEventListener('resize', handleResize);
 
     // Particle pool
-    const particleCount = 45;
+    const particleCount = 40;
     const particles = Array.from({ length: particleCount }, () => ({
       x: Math.random() * width,
       y: Math.random() * height,
       size: Math.random() * 2 + 0.8,
-      speedY: Math.random() * 0.4 + 0.15,
-      speedX: (Math.random() - 0.5) * 0.25,
-      opacity: Math.random() * 0.6 + 0.2,
+      speedY: Math.random() * 0.35 + 0.15,
+      speedX: (Math.random() - 0.5) * 0.2,
+      opacity: Math.random() * 0.5 + 0.2,
       pulse: Math.random() * 0.02 + 0.01,
       increasing: Math.random() > 0.5,
     }));
@@ -65,7 +65,7 @@ const HeroSection = () => {
 
         if (p.increasing) {
           p.opacity += p.pulse;
-          if (p.opacity >= 0.8) p.increasing = false;
+          if (p.opacity >= 0.75) p.increasing = false;
         } else {
           p.opacity -= p.pulse;
           if (p.opacity <= 0.15) p.increasing = true;
@@ -83,7 +83,7 @@ const HeroSection = () => {
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(230, 200, 117, ${p.opacity})`;
         ctx.shadowBlur = 8;
-        ctx.shadowColor = 'rgba(212, 175, 55, 0.6)';
+        ctx.shadowColor = 'rgba(212, 175, 55, 0.5)';
         ctx.fill();
       });
 
@@ -160,7 +160,10 @@ const HeroSection = () => {
   };
 
   return (
-    <section id="hero" className="relative min-h-[100dvh] bg-textured overflow-hidden flex flex-col justify-between pt-16 sm:pt-20 lg:pt-28 pb-10 sm:pb-14 lg:pb-20">
+    <section
+      id="hero"
+      className="relative min-h-screen bg-textured overflow-hidden flex flex-col justify-start pt-20 sm:pt-24 lg:pt-28 pb-16 lg:pb-20"
+    >
       {/* 1. Ambient Lighting & Canvas Particle Atmosphere with Parallax */}
       <canvas
         ref={canvasRef}
@@ -173,11 +176,11 @@ const HeroSection = () => {
       <Parallax speed={0.25} className="absolute -top-32 -left-32 w-[550px] h-[550px] pointer-events-none z-[1]">
         <div className="w-full h-full emerald-glow-orb" />
       </Parallax>
-      
+
       <Parallax speed={-0.3} className="absolute top-1/3 -right-36 w-[600px] h-[600px] pointer-events-none z-[1]">
         <div className="w-full h-full gold-glow-orb" />
       </Parallax>
-      
+
       <Parallax speed={0.18} className="absolute -bottom-40 left-1/4 w-[500px] h-[500px] pointer-events-none z-[1]">
         <div className="w-full h-full emerald-glow-orb" />
       </Parallax>
@@ -190,17 +193,17 @@ const HeroSection = () => {
         </svg>
       </Parallax>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 my-1 sm:my-3 lg:my-auto">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
-        {/* 2. Top Majestic Calligraphy Header with Parallax Drift */}
-        <Parallax speed={0.12} className="text-center pt-1 sm:pt-2 pb-3 sm:pb-6 lg:pb-10 animate-fade-in">
+        {/* 2. Top Majestic Calligraphy Header */}
+        <Parallax speed={0.1} className="text-center pt-2 sm:pt-4 pb-6 sm:pb-8 lg:pb-12 animate-fade-in">
           {/* Eyebrow Filigree Line */}
-          <div className="inline-flex items-center gap-3 sm:gap-4 mb-1.5 sm:mb-3">
-            <div className="w-10 sm:w-20 h-px bg-gradient-to-r from-transparent via-secondary/70 to-secondary" />
+          <div className="inline-flex items-center gap-3 sm:gap-4 mb-2 sm:mb-3">
+            <div className="w-8 sm:w-16 h-px bg-gradient-to-r from-transparent via-secondary/70 to-secondary" />
             <span className="text-secondary/80 text-[11px] sm:text-xs md:text-sm tracking-[0.25em] uppercase font-sans font-medium">
               ✦ بِسْمِ اللَّهِ ✦
             </span>
-            <div className="w-10 sm:w-20 h-px bg-gradient-to-l from-transparent via-secondary/70 to-secondary" />
+            <div className="w-8 sm:w-16 h-px bg-gradient-to-l from-transparent via-secondary/70 to-secondary" />
           </div>
 
           {/* Animated Bismillah Arabic Script */}
@@ -226,9 +229,8 @@ const HeroSection = () => {
           </div>
 
           {/* Translation & Quranic Ayat */}
-          <div className={`transition-all duration-700 mt-1 sm:mt-2 flex flex-col items-center justify-center gap-0.5 sm:gap-1 ${showTranslation ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
-            }`}>
-            <p className="text-foreground/80 text-[11px] sm:text-xs md:text-sm tracking-[0.16em] uppercase font-medium font-sans">
+          <div className={`transition-all duration-700 mt-2 flex flex-col items-center justify-center gap-1 ${showTranslation ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}>
+            <p className="text-foreground/85 text-[11px] sm:text-xs md:text-sm tracking-[0.16em] uppercase font-medium font-sans px-2">
               In the name of Allah, the Most Gracious, the Most Merciful
             </p>
             <p className="text-secondary/80 text-[10px] sm:text-[11px] md:text-xs tracking-wider italic font-sans">
@@ -237,11 +239,72 @@ const HeroSection = () => {
           </div>
         </Parallax>
 
-        {/* 3. Main Hero Content Layout: Balanced 12-Column Spatial Architecture */}
-        <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 xl:gap-16 items-center">
+        {/* 3. Main Hero Content Layout: Balanced Spatial Architecture */}
+        <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 xl:gap-16 items-start lg:items-center">
+
+          {/* Right Column (col-span-5): 3D Layered Portrait Stage (On mobile, renders first with generous margin) */}
+          <Parallax speed={-0.06} className="lg:col-span-5 flex flex-col items-center animate-fade-in order-1 lg:order-2 my-2 sm:my-4 lg:my-0">
+            <div className="relative w-full max-w-[280px] sm:max-w-[340px] md:max-w-[380px] lg:max-w-[420px]">
+
+              {/* Ambient Aura Glow Mesh */}
+              <div className="absolute -inset-4 sm:-inset-6 bg-gradient-to-tr from-secondary/30 via-emerald-600/20 to-amber-400/30 rounded-[3rem] blur-2xl sm:blur-3xl opacity-60 pointer-events-none" />
+
+              {/* Top Accent Badges (Comfortable Clearance, No Overlap) */}
+              <div className="flex items-center justify-between gap-2 mb-3 px-1">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-card/95 border border-emerald-400/50 text-emerald-300 text-[10px] sm:text-xs font-semibold shadow-md backdrop-blur-md">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>Verified Biodata</span>
+                </div>
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-card/95 border border-secondary/50 text-secondary text-[10px] sm:text-xs font-semibold shadow-md backdrop-blur-md">
+                  <Sparkles className="w-3 h-3 text-amber-400" />
+                  <span>Software Eng.</span>
+                </div>
+              </div>
+
+              {/* Doppelrand Luxury Outer Hardware Frame */}
+              <div className="double-bezel-shell relative p-2 sm:p-2.5 lg:p-3 rounded-[2.2rem] sm:rounded-[2.6rem] shadow-[0_20px_50px_rgba(0,0,0,0.6)]">
+                {/* Traditional Intricate Brass Corner Accents */}
+                <div className="absolute top-3.5 left-3.5 w-6 h-6 border-t-2 border-l-2 border-secondary/70 rounded-tl-lg pointer-events-none z-20" />
+                <div className="absolute top-3.5 right-3.5 w-6 h-6 border-t-2 border-r-2 border-secondary/70 rounded-tr-lg pointer-events-none z-20" />
+                <div className="absolute bottom-3.5 left-3.5 w-6 h-6 border-b-2 border-l-2 border-secondary/70 rounded-bl-lg pointer-events-none z-20" />
+                <div className="absolute bottom-3.5 right-3.5 w-6 h-6 border-b-2 border-r-2 border-secondary/70 rounded-br-lg pointer-events-none z-20" />
+
+                {/* Inner Vessel: Interactive Layered Photo Carousel */}
+                <div className="relative overflow-hidden rounded-[calc(2.2rem-0.5rem)] sm:rounded-[calc(2.6rem-0.65rem)] bg-card/90">
+                  <PhotoCarousel ref={carouselRef} />
+                </div>
+              </div>
+
+              {/* Clean Action Buttons Below Card (No Collision) */}
+              <div className="mt-4 flex items-center justify-center gap-2.5 w-full">
+                <Button
+                  onClick={() => carouselRef.current?.open(0)}
+                  className="group inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-secondary via-amber-400 to-amber-500 text-primary font-bold text-xs sm:text-sm shadow-[0_8px_20px_rgba(212,175,55,0.4)] hover:shadow-[0_12px_28px_rgba(212,175,55,0.6)] transition-all duration-300 hover:scale-105 cursor-pointer"
+                >
+                  <Images className="w-4 h-4 text-primary group-hover:scale-110 transition-transform" />
+                  <span>View Full Gallery</span>
+                </Button>
+                <button
+                  onClick={() => {
+                    if (lenis) {
+                      lenis.scrollTo('#gallery', { offset: -60, duration: 1.2 });
+                    } else {
+                      document.querySelector('#gallery')?.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }}
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-card/90 hover:bg-secondary/20 border border-secondary/40 text-secondary text-xs font-semibold backdrop-blur-md transition-all shadow-md hover:scale-105 cursor-pointer"
+                  title="Browse Photo Showcase Marquee"
+                >
+                  <span>Showcase</span>
+                  <ArrowUpRight className="w-3.5 h-3.5 text-secondary" />
+                </button>
+              </div>
+
+            </div>
+          </Parallax>
 
           {/* Left Column (col-span-7): Bio Info, Ethos Quote, Highlights & CTA Island */}
-          <div className="lg:col-span-7 text-center lg:text-left animate-fade-in order-2 lg:order-1">
+          <div className="lg:col-span-7 text-center lg:text-left animate-fade-in order-2 lg:order-1 pt-4 lg:pt-0">
 
             {/* Status Eyebrow Badge */}
             <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-secondary/10 border border-secondary/30 backdrop-blur-md mb-4 sm:mb-5 shadow-sm shadow-secondary/10">
@@ -256,13 +319,13 @@ const HeroSection = () => {
               <span className="text-foreground/85 text-xs sm:text-sm font-medium font-sans">Lucknow, UP</span>
             </div>
 
-            {/* Main Name & Title */}
-            <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-gold-luxury mb-3 sm:mb-4 leading-[1.1]">
+            {/* Main Name & Title (Clean Serif Typography) */}
+            <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-gold-luxury mb-3 sm:mb-4 leading-[1.15]">
               Shah Hussain
             </h1>
 
             {/* Role & Key Accolade Tag Badges */}
-            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 sm:gap-2.5 mb-5">
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 sm:gap-2.5 mb-5 sm:mb-6">
               <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-card/90 border border-secondary/30 text-secondary text-xs sm:text-sm font-medium shadow-inner font-sans">
                 <Briefcase className="w-3.5 h-3.5 text-secondary" />
                 Software Engineer
@@ -278,7 +341,7 @@ const HeroSection = () => {
             </div>
 
             {/* Narrative Ethos Quote Box */}
-            <div className="relative p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-card/95 via-card/70 to-transparent border border-secondary/25 backdrop-blur-md mb-6 sm:mb-7 shadow-lg shadow-black/20 text-left">
+            <div className="relative p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-card/95 via-card/80 to-card/60 border border-secondary/25 backdrop-blur-md mb-6 sm:mb-7 shadow-lg shadow-black/20 text-left">
               <div className="flex items-start gap-3">
                 <span className="text-secondary text-2xl sm:text-3xl font-sans font-bold leading-none select-none">“</span>
                 <p className="text-foreground/90 text-xs sm:text-sm md:text-base leading-relaxed italic font-sans font-normal">
@@ -289,7 +352,7 @@ const HeroSection = () => {
             </div>
 
             {/* 4-Item Quick-Highlight Matrix */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 mb-7 sm:mb-8">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 mb-6 sm:mb-8">
               {/* Stat 1: Profession */}
               <div className="p-3 sm:p-3.5 rounded-2xl bg-card/70 border border-secondary/20 backdrop-blur-sm hover:border-secondary/40 transition-all duration-300 group hover:-translate-y-0.5">
                 <div className="flex items-center gap-2 text-secondary/80 text-[11px] uppercase tracking-wider mb-1 font-medium font-sans">
@@ -335,12 +398,12 @@ const HeroSection = () => {
               </div>
             </div>
 
-            {/* 4. Action Island: CTA Button Architecture */}
-            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 sm:gap-4">
+            {/* Action Island: CTA Button Architecture */}
+            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 sm:gap-4 mb-4">
               {/* Primary Action Button */}
               <button
                 onClick={scrollToAbout}
-                className="island-btn group relative w-full sm:w-auto inline-flex items-center justify-between sm:justify-center gap-4 px-6 py-3.5 rounded-full bg-gradient-to-r from-amber-400 via-secondary to-amber-500 text-primary font-semibold text-sm sm:text-base shadow-[0_10px_25px_-5px_rgba(212,175,55,0.4)] hover:shadow-[0_15px_35px_-5px_rgba(212,175,55,0.6)] transition-all duration-500 hover:-translate-y-0.5 overflow-hidden"
+                className="island-btn group relative w-full sm:w-auto inline-flex items-center justify-between sm:justify-center gap-4 px-6 py-3.5 rounded-full bg-gradient-to-r from-amber-400 via-secondary to-amber-500 text-primary font-semibold text-sm sm:text-base shadow-[0_10px_25px_-5px_rgba(212,175,55,0.4)] hover:shadow-[0_15px_35px_-5px_rgba(212,175,55,0.6)] transition-all duration-500 hover:-translate-y-0.5 overflow-hidden cursor-pointer"
               >
                 <span className="relative z-10 font-bold font-sans">Explore Full Profile</span>
                 <span className="relative z-10 w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center group-hover:bg-primary/30 transition-all duration-300 group-hover:translate-x-1 group-hover:-translate-y-0.5">
@@ -364,81 +427,15 @@ const HeroSection = () => {
 
           </div>
 
-          {/* Right Column (col-span-5): 3D Layered Portrait Stage & Showcase with Parallax */}
-          <Parallax speed={-0.08} className="lg:col-span-5 flex justify-center animate-fade-in order-1 lg:order-2 mb-2 lg:mb-0">
-            <div className="relative w-full max-w-[320px] sm:max-w-[370px] md:max-w-[410px]">
-
-              {/* Outer Ambient Aura Mesh with Counter Parallax */}
-              <div className="absolute -inset-6 bg-gradient-to-tr from-secondary/30 via-emerald-600/20 to-amber-400/30 rounded-[3.5rem] blur-3xl opacity-60 pointer-events-none" />
-
-              {/* Floating Top-Left Micro-Chip: Verified Profile */}
-              <Parallax speed={0.18} className="absolute -top-3.5 -left-2 sm:-top-4 sm:-left-3 z-30 pointer-events-none">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-card/95 border border-emerald-400/50 text-emerald-300 text-xs font-semibold shadow-xl backdrop-blur-md animate-float">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                  <span>Verified Biodata</span>
-                </div>
-              </Parallax>
-
-              {/* Floating Top-Right Micro-Chip: Profession */}
-              <Parallax speed={-0.15} className="absolute -top-3.5 -right-2 sm:-top-4 sm:-right-3 z-30 pointer-events-none">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-card/95 border border-secondary/50 text-secondary text-xs font-semibold shadow-xl backdrop-blur-md animate-float" style={{ animationDelay: '1.5s' }}>
-                  <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-                  <span>Software Eng.</span>
-                </div>
-              </Parallax>
-
-              {/* Doppelrand Luxury Outer Hardware Frame */}
-              <div className="double-bezel-shell relative p-2.5 sm:p-3 rounded-[2.8rem] shadow-[0_25px_60px_rgba(0,0,0,0.6)]">
-
-                {/* Traditional Intricate Brass Corner Accents */}
-                <div className="absolute top-4 left-4 w-7 h-7 border-t-2 border-l-2 border-secondary/70 rounded-tl-xl pointer-events-none z-20" />
-                <div className="absolute top-4 right-4 w-7 h-7 border-t-2 border-r-2 border-secondary/70 rounded-tr-xl pointer-events-none z-20" />
-                <div className="absolute bottom-4 left-4 w-7 h-7 border-b-2 border-l-2 border-secondary/70 rounded-bl-xl pointer-events-none z-20" />
-                <div className="absolute bottom-4 right-4 w-7 h-7 border-b-2 border-r-2 border-secondary/70 rounded-br-xl pointer-events-none z-20" />
-
-                {/* Inner Vessel: Interactive Layered Photo Carousel */}
-                <div className="relative overflow-hidden rounded-[calc(2.8rem-0.75rem)] bg-card/90">
-                  <PhotoCarousel ref={carouselRef} />
-                </div>
-              </div>
-
-              {/* Floating Bottom Center Action Pill: View Full Gallery / Modal */}
-              <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2 w-auto whitespace-nowrap">
-                <Button
-                  onClick={() => carouselRef.current?.open(0)}
-                  className="group inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-secondary via-amber-400 to-amber-500 text-primary font-bold text-xs sm:text-sm shadow-[0_8px_20px_rgba(212,175,55,0.4)] hover:shadow-[0_12px_28px_rgba(212,175,55,0.6)] transition-all duration-300 hover:scale-105"
-                >
-                  <Images className="w-4 h-4 text-primary group-hover:scale-110 transition-transform" />
-                  <span>View Full Gallery</span>
-                </Button>
-                <button
-                  onClick={() => {
-                    if (lenis) {
-                      lenis.scrollTo('#gallery', { offset: -60, duration: 1.2 });
-                    } else {
-                      document.querySelector('#gallery')?.scrollIntoView({ behavior: 'smooth' });
-                    }
-                  }}
-                  className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-card/90 hover:bg-secondary/20 border border-secondary/40 text-secondary text-xs font-semibold backdrop-blur-md transition-all shadow-md hover:scale-105 cursor-pointer"
-                  title="Browse Photo Showcase Marquee"
-                >
-                  <span>Showcase</span>
-                  <ArrowUpRight className="w-3.5 h-3.5 text-secondary" />
-                </button>
-              </div>
-
-            </div>
-          </Parallax>
-
         </div>
 
       </div>
 
-      {/* 5. Sleek Luxury Scroll Down Indicator */}
-      <div className="relative z-10 flex flex-col items-center justify-center pt-8 sm:pt-10">
+      {/* 4. Sleek Luxury Scroll Down Indicator */}
+      <div className="relative z-10 flex flex-col items-center justify-center pt-8 sm:pt-10 pb-4">
         <button
           onClick={scrollToAbout}
-          className="group flex flex-col items-center gap-1.5 text-secondary/60 hover:text-secondary transition-all duration-300 focus:outline-none"
+          className="group flex flex-col items-center gap-1.5 text-secondary/60 hover:text-secondary transition-all duration-300 focus:outline-none cursor-pointer"
           aria-label="Scroll to profile details"
         >
           <span className="text-[10px] tracking-[0.25em] uppercase font-semibold text-secondary/70 group-hover:text-secondary transition-colors font-sans">
